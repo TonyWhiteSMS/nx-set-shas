@@ -38052,6 +38052,8 @@ function commitExists(octokit, branchName, commitSha) {
                 sha: branchName,
                 per_page: 100,
             });
+	// DEBUG
+    	process.stdout.write('commitExists: ' + commitSha +', ' + commits.data.some((commit) => commit.sha === commitSha));
             return commits.data.some((commit) => commit.sha === commitSha);
         }
         catch (_a) {
