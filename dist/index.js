@@ -38046,11 +38046,18 @@ function commitExists(octokit, branchName, commitSha) {
                 commit_sha: commitSha,
             });
             // Check the commit exists on the expected main branch (it will not in the case of a rebased main branch)
-            const commits = yield octokit.request("GET /repos/{owner}/{repo}/commits", {
+            let maxPages = 20;
+            const commits = yield octokit.paginate("GET /repos/{owner}/{repo}/commits", {
                 owner,
                 repo,
                 sha: branchName,
                 per_page: 100,
+            }, (response, done) => {
+                if (maxPages <= 0 || response.data.some((commit) => commit.sha === commitSha)) {
+                    done();
+                }
+                maxPages--;
+                return response;
             });
             // DEBUG
             process.stdout.write('commitExists - found ' + commits.data.length + ' commits');
