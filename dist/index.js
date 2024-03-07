@@ -38057,7 +38057,7 @@ function commitExists(octokit, branchName, commitSha) {
                     done();
                 }
                 maxPages--;
-                // return response;
+                return response;
             });
             // DEBUG
             process.stdout.write('commitExists - found ' + commits?.data?.length + ' commits\n');
