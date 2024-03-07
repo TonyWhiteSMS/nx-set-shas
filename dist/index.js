@@ -37984,7 +37984,7 @@ function findSuccessfulCommit(workflow_id, run_id, owner, repo, branch, lastSucc
         })
             .then(({ data: { workflow_runs } }) => workflow_runs.map((run) => run.head_sha));
 	// DEBUG
-    	process.stdout.write('findSuccessfulCommit: ' + shas);
+    	process.stdout.write('findSuccessfulCommit: ' + shas + '\n');
         return yield findExistingCommit(octokit, branch, shas);
     });
 }
@@ -38060,8 +38060,8 @@ function commitExists(octokit, branchName, commitSha) {
                 // return response;
             });
             // DEBUG
-            process.stdout.write('commitExists - found ' + commits.data.length + ' commits');
-            process.stdout.write('commitExists: ' + commitSha +', ' + commits.data.some((commit) => commit.sha === commitSha));
+            process.stdout.write('commitExists - found ' + commits?.data?.length + ' commits\n');
+            process.stdout.write('commitExists: ' + commitSha +', ' + commits?.data.some((commit) => commit.sha === commitSha) + '\n');
             return commits.data.some((commit) => commit.sha === commitSha);
         }
         catch (_a) {
